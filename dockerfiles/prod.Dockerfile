@@ -30,6 +30,10 @@ FROM alpine:3.20.3
 
 WORKDIR /
 
+RUN apk add --update --no-cache ca-certificates tzdata && update-ca-certificates \
+    && cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
+    && rm -rf /usr/share/zoneinfo
+
 COPY --from=client-build /app/dist dist
 COPY --from=server-build /github.com/traP-jp/h23s_15/app app
 
